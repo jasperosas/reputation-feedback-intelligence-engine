@@ -1,0 +1,5 @@
+feedback_id,customer_label,sentiment_label,sentiment_score,severity_score,confidence,prior_negative_count,illustrative_route,synthetic_data_only
+FB-DEMO-001,Demo Customer A,Positive,0.90,0.10,0.96,0,Ready to post,TRUE
+FB-DEMO-002,Demo Customer B,Negative,-0.60,0.84,0.94,0,Manager escalation,TRUE
+FB-DEMO-003,Demo Customer C,Neutral,0.02,0.12,0.52,0,Human review,TRUE
+FB-DEMO-004,Demo Customer D,Negative,-0.32,0.30,0.92,0,Private queue,TRUE
