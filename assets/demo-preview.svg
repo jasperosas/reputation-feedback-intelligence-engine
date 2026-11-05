@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="530" viewBox="0 0 1100 530" role="img" aria-labelledby="t d">
+<title id="t">Illustrative AI feedback routing summary with synthetic data</title>
+<desc id="d">Fictional customer sentiment examples, not a real production run or n8n execution screenshot.</desc>
+<rect width="1100" height="530" fill="#0b1727"/>
+<rect x="32" y="30" width="1036" height="462" rx="20" fill="#14263c" stroke="#365069"/>
+<rect x="32" y="30" width="1036" height="65" rx="20" fill="#1d3651"/>
+<circle cx="65" cy="63" r="8" fill="#e77582"/><circle cx="91" cy="63" r="8" fill="#f5bf5d"/><circle cx="117" cy="63" r="8" fill="#54d7bb"/>
+<text x="155" y="71" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#eff7ff">Feedback intelligence · illustrative routing</text>
+<text x="62" y="140" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#7ee3cb">SYNTHETIC DATA — MOCK-UP ONLY, NOT A LIVE EXECUTION</text>
+<rect x="58" y="162" width="984" height="48" rx="8" fill="#273e55"/>
+<g font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#f7fbff">
+<text x="78" y="193">Record</text><text x="313" y="193">Sentiment</text><text x="492" y="193">Confidence</text><text x="704" y="193">Illustrative route</text>
+</g>
+<g font-family="Arial,sans-serif" font-size="18" fill="#edf5ff">
+<text x="78" y="254">FB-DEMO-001</text><text x="313" y="254">Positive</text><text x="492" y="254">0.96</text>
+<text x="78" y="319">FB-DEMO-002</text><text x="313" y="319">Negative</text><text x="492" y="319">0.94</text>
+<text x="78" y="384">FB-DEMO-003</text><text x="313" y="384">Neutral</text><text x="492" y="384">0.52</text>
+<text x="78" y="449">FB-DEMO-004</text><text x="313" y="449">Negative</text><text x="492" y="449">0.92</text>
+</g>
+<g font-family="Arial,sans-serif" font-size="16">
+<rect x="695" y="228" width="225" height="37" rx="17" fill="#1e625a"/><text x="720" y="252" fill="#b8ffea">Ready to post</text>
+<rect x="695" y="293" width="225" height="37" rx="17" fill="#713b4f"/><text x="715" y="317" fill="#ffd0dc">Manager escalation</text>
+<rect x="695" y="358" width="225" height="37" rx="17" fill="#544f84"/><text x="715" y="382" fill="#e8dfff">Human review</text>
+<rect x="695" y="423" width="225" height="37" rx="17" fill="#665330"/><text x="720" y="447" fill="#ffedbf">Private queue</text>
+</g>
+<path d="M58 274 H1042 M58 339 H1042 M58 404 H1042" stroke="#39516a"/>
+</svg>
