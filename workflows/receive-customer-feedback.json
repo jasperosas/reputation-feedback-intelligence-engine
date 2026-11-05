@@ -1,0 +1,4173 @@
+{
+  "name": "Reputation — Receive Customer Feedback",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Tell Us About Your Experience",
+        "formDescription": "We value your feedback. Please tell us about your recent service experience.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "fieldName": "customer_name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldName": "customer_email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Feedback",
+              "fieldName": "feedback_text",
+              "requiredField": true
+            },
+            {
+              "fieldType": "hiddenField",
+              "fieldName": "feedback_token"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        96
+      ],
+      "id": "53367036-358a-4968-90a3-5372b9ca384e",
+      "name": "Customer Feedback Form",
+      "webhookId": "00000000-0000-4000-8000-000000002385"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ 'FB-' + $json.visit_id + '-' + $now.toMillis() }}",
+            "visit_id": "={{ $json.visit_id }}",
+            "customer_name": "={{ $json.customer_name }}",
+            "customer_id": "={{ $json.customer_id }}",
+            "customer_email": "={{ $json.customer_email }}",
+            "received_at": "={{ $now.toISO() }}",
+            "feedback_text": "={{ $('Customer Feedback Form').first().json.feedback_text }}",
+            "processing_status": "Received",
+            "review_status": "Not required",
+            "alert_status": "Not required",
+            "alert_delivery_status": "Not required",
+            "response_status": "Not required",
+            "draft_status": "Not required",
+            "location": "={{ $json.location }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        96
+      ],
+      "id": "bd4769b6-88c1-46e7-a878-c539779ee1f8",
+      "name": "Save Original Feedback",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 411326564,
+          "mode": "list"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "feedback_token",
+              "lookupValue": "={{ $('Customer Feedback Form').first().json.feedback_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        96
+      ],
+      "id": "98e4ea33-d715-4ca2-a85d-4a2be93c8e19",
+      "name": "Get Matching Visit",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b407eb0d-820c-4cf7-b714-4038af1938d4",
+              "name": "=feedback_id",
+              "value": "={{ $('Save Original Feedback').first().json.feedback_id }}",
+              "type": "string"
+            },
+            {
+              "id": "48906c3f-8c00-4f4c-8749-468a07441aef",
+              "name": "=visit_id",
+              "value": "={{ $json.visit_id }}",
+              "type": "string"
+            },
+            {
+              "id": "3860bff2-27a4-482d-965d-eb33cfbdc62d",
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}",
+              "type": "string"
+            },
+            {
+              "id": "c98ba73e-b1fe-4f38-b9bc-56caab9fef6c",
+              "name": "customer_name",
+              "value": "={{ $json.customer_name }}",
+              "type": "string"
+            },
+            {
+              "id": "de0e659b-b353-4490-94ca-5e7c5ac3ed83",
+              "name": "customer_email",
+              "value": "={{ $json.customer_email }}",
+              "type": "string"
+            },
+            {
+              "id": "c932636c-84bf-48c1-8423-cf69dd6c7a2f",
+              "name": "location",
+              "value": "={{ $json.location }}",
+              "type": "string"
+            },
+            {
+              "id": "9d16f21c-92d6-4d92-98ea-9f2096a1c302",
+              "name": "service",
+              "value": "={{ $('Get Matching Visit').first().json.service }}",
+              "type": "string"
+            },
+            {
+              "id": "fd0ec6ba-e689-40e3-8b51-49d8f108d4a7",
+              "name": "manager_email",
+              "value": "={{ $('Get Matching Visit').first().json.manager_email }}",
+              "type": "string"
+            },
+            {
+              "id": "2d2e2cdb-2cd7-4db8-97aa-e2c5d079a5c9",
+              "name": "feedback_text",
+              "value": "={{ $('Customer Feedback Form').item.json.feedback_text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        896,
+        96
+      ],
+      "id": "f97d7bda-9dde-4577-8fe4-ce9b8dc7f183",
+      "name": "Prepare Feedback Context",
+      "alwaysOutputData": true,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "visit_id": "={{ $json.visit_id }}",
+            "customer_id": "={{ $json.customer_id }}",
+            "customer_email": "={{ $json.customer_email }}",
+            "customer_name": "={{ $json.customer_name }}",
+            "location": "={{ $json.location }}",
+            "feedback_text": "={{ $json.feedback_text }}",
+            "processing_status": "Processing"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sentiment_label",
+              "displayName": "sentiment_label",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1120,
+        96
+      ],
+      "id": "46acc0dd-e736-4978-8088-16abf2ecb584",
+      "name": "Update Feedback Context",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a customer feedback analysis system** for a multi-location car care and auto repair company.\n\nYour task is to analyze only the customer's feedback and return a structured assessment.\n\nDo not generate a response to the customer.\nDo not decide how the feedback should be routed.\nDo not recommend actions.\nDo not invent, assume, or add information that is not present in the feedback.\n\n## Analyze the following\n\n### 1. Sentiment Label\nClassify the overall sentiment as exactly one of:\n\n- Positive\n- Neutral\n- Negative\n\n### 2. Sentiment Score\nReturn a numerical score from **-1 to 1**.\n\nUse the following guide:\n\n- **-1.00 to -0.75** = Extremely negative\n- **-0.74 to -0.40** = Clearly negative\n- **-0.39 to -0.10** = Mildly negative\n- **-0.09 to 0.09** = Neutral\n- **0.10 to 0.39** = Mildly positive\n- **0.40 to 0.74** = Clearly positive\n- **0.75 to 1.00** = Extremely positive\n\nConsider the customer's overall experience, not just individual positive or negative words.\n\nIf the feedback contains both positive and negative comments, judge which aspect dominates the overall message.\n\n### 3. Severity Score\nReturn a numerical score from **0 to 1** showing how serious the customer's problem is.\n\nUse this guide:\n\n- **0.00 to 0.19 — Very Low**\n  - No real complaint\n  - Positive feedback\n  - Minor suggestion\n  - Small inconvenience with little impact\n\n- **0.20 to 0.39 — Low**\n  - Noticeable inconvenience\n  - Delay\n  - Minor communication problem\n  - Small service dissatisfaction\n  - Issue with limited impact\n\n- **0.40 to 0.59 — Moderate**\n  - Significant inconvenience\n  - Poor service experience\n  - Repeated delays\n  - Unresolved service concern\n  - Meaningful financial or operational impact\n\n- **0.60 to 0.79 — High**\n  - Major service failure\n  - Significant financial loss\n  - Vehicle damage\n  - Serious unresolved complaint\n  - Major disruption to the customer\n\n- **0.80 to 1.00 — Critical**\n  - Serious safety risk\n  - Severe vehicle damage\n  - Potentially dangerous repair failure\n  - Major financial loss\n  - Extreme service failure with serious consequences\n\nWhen assigning severity, consider:\n\n- Safety risk\n- Vehicle damage\n- Financial loss\n- Repair/service failure\n- Whether the vehicle is unusable\n- Repeated unresolved problems\n- Major inconvenience\n- Impact on the customer's ability to use their vehicle\n\nDo not increase severity simply because the customer uses angry or emotional language.\n\nSeverity must reflect the seriousness of the underlying issue.\n\n### 4. Confidence\nReturn a confidence score from **0 to 1** representing how certain the analysis is.\n\nUse higher confidence when:\n- The customer's meaning is clear.\n- The sentiment is explicit.\n- The issue is clearly described.\n\nUse lower confidence when:\n- The feedback is vague.\n- Important context is missing.\n- The message is contradictory or ambiguous.\n\n### 5. Summary\nWrite a short, factual summary of the customer's feedback.\n\nThe summary must:\n- Be no more than 1–2 sentences.\n- State the main experience or issue.\n- Remain neutral and factual.\n- Avoid emotional exaggeration.\n- Avoid recommendations.\n- Avoid assumptions.\n\n## Important Rules\n\n- Analyze only the information contained in the feedback.\n- Never invent missing details.\n- Do not infer vehicle damage unless the customer describes vehicle damage.\n- Do not infer a safety risk unless the customer's feedback indicates one.\n- Do not classify ordinary waiting time as a serious safety issue.\n- Positive feedback should normally have a severity score close to 0 unless a separate serious problem is mentioned.\n- A negative sentiment does not automatically mean high severity.\n- Sentiment and severity must be evaluated independently.\n- A customer can be mildly negative while the underlying problem is serious.\n- A customer can sound very angry about a relatively minor issue.\n\n## Required Output\n\nReturn only the following fields:\n\n{\n  \"sentiment_label\": \"Positive | Neutral | Negative\",\n  \"sentiment_score\": 0.00,\n  \"severity_score\": 0.00,\n  \"confidence\": 0.00,\n  \"summary\": \"Short factual summary\"\n}\n\nUse valid JSON.\n\nDo not include:\n- Markdown\n- Explanation\n- Customer response\n- Routing decision\n- Recommended action\n- Additional fields\n- Text before or after the JSON"
+            },
+            {
+              "content": "=Analyze this customer feedback:\n\n{{ $('Prepare Feedback Context').first().json.feedback_text }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_schema",
+              "name": "feedback_analysis",
+              "schema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"sentiment_label\": {\n      \"type\": \"string\",\n      \"enum\": [\"Positive\", \"Neutral\", \"Negative\"]\n    },\n    \"sentiment_score\": {\n      \"type\": \"number\",\n      \"minimum\": -1,\n      \"maximum\": 1\n    },\n    \"severity_score\": {\n      \"type\": \"number\",\n      \"minimum\": 0,\n      \"maximum\": 1\n    },\n    \"confidence\": {\n      \"type\": \"number\",\n      \"minimum\": 0,\n      \"maximum\": 1\n    },\n    \"summary\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"sentiment_label\",\n    \"sentiment_score\",\n    \"severity_score\",\n    \"confidence\",\n    \"summary\"\n  ],\n  \"additionalProperties\": false\n}",
+              "description": "Structured analysis of customer feedback containing sentiment, sentiment score, severity score, confidence, and a short factual summary.",
+              "strict": true
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1264,
+        -288
+      ],
+      "id": "a6ea51fd-aeb1-42c1-b6bc-e9656842bb3c",
+      "name": "Analyze Feedback",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "742b1177-7475-4bc5-a4be-53d7fbe9766e",
+              "name": "feedback_id",
+              "value": "={{ $('Save Original Feedback').first().json.feedback_id }}",
+              "type": "string"
+            },
+            {
+              "id": "6806ccd1-0335-43a8-813f-4e9d0a70c6cc",
+              "name": "customer_id",
+              "value": "={{ $('Prepare Feedback Context').first().json.customer_id }}",
+              "type": "string"
+            },
+            {
+              "id": "1afd672e-afd6-4c06-9058-2a02bb510615",
+              "name": "feedback_text",
+              "value": "={{ $('Prepare Feedback Context').first().json.feedback_text }}",
+              "type": "string"
+            },
+            {
+              "id": "3575094c-22d9-42bd-b2c4-767a840b2b02",
+              "name": "location",
+              "value": "={{ $('Prepare Feedback Context').first().json.location }}",
+              "type": "string"
+            },
+            {
+              "id": "3766f27c-ef36-435e-b8de-291afc24364a",
+              "name": "sentiment_label",
+              "value": "={{ $json.output[0].content[0].text.sentiment_label }}",
+              "type": "string"
+            },
+            {
+              "id": "847eb848-6ffc-4744-8e26-756604f20315",
+              "name": "sentiment_score",
+              "value": "={{ $json.output[0].content[0].text.sentiment_score }}",
+              "type": "number"
+            },
+            {
+              "id": "051b24b1-48a9-45ff-beca-cbcc664bf623",
+              "name": "severity_score",
+              "value": "={{ $json.output[0].content[0].text.severity_score }}",
+              "type": "number"
+            },
+            {
+              "id": "39bf80b5-22ee-468a-9a20-864eb9eb4be9",
+              "name": "confidence",
+              "value": "={{ $json.output[0].content[0].text.confidence }}",
+              "type": "number"
+            },
+            {
+              "id": "a8343ec4-8044-4a19-83a1-09b03291ff0e",
+              "name": "summary",
+              "value": "={{ $json.output[0].content[0].text.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1632,
+        -272
+      ],
+      "id": "0523611b-34c7-4691-ad6b-1699450a0b68",
+      "name": "Extract AI Analysis",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "visit_id": "={{ $('Prepare Feedback Context').first().json.visit_id }}",
+            "customer_id": "={{ $json.customer_id }}",
+            "customer_name": "={{ $('Prepare Feedback Context').first().json.customer_name }}",
+            "customer_email": "={{ $('Prepare Feedback Context').first().json.customer_email }}",
+            "location": "={{ $json.location }}",
+            "feedback_text": "={{ $json.feedback_text }}",
+            "sentiment_score": "={{ $json.sentiment_score }}",
+            "severity_score": "={{ $json.severity_score }}",
+            "confidence": "={{ $json.confidence }}",
+            "processing_status": "Processing",
+            "received_at": "={{ $('Save Original Feedback').first().json.received_at }}",
+            "draft_status": "Not required",
+            "response_status": "Not required",
+            "alert_delivery_status": "Not required",
+            "review_status": "Not required",
+            "sentiment_label": "={{ $json.sentiment_label }}"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sentiment_label",
+              "displayName": "sentiment_label",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1920,
+        96
+      ],
+      "id": "da0faf9a-c3fc-4fee-b41e-93f3bbec64be",
+      "name": "Save AI Scores",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "customer_id",
+              "lookupValue": "={{ $('Extract AI Analysis').first().json.customer_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1888,
+        -304
+      ],
+      "id": "f2ce0464-c5a9-400a-80ce-8a56054e1416",
+      "name": "Get Customer Feedback History"
+    },
+    {
+      "parameters": {
+        "jsCode": "const currentFeedbackId =\n  $('Extract AI Analysis').first().json.feedback_id;\n\nconst history = $input.all();\n\nconst priorNegativeCount = history.filter(item => {\n  const row = item.json;\n\n  return (\n    row.feedback_id !== currentFeedbackId &&\n    Number(row.sentiment_score) < 0\n  );\n}).length;\n\nreturn [\n  {\n    json: {\n      ...$('Extract AI Analysis').first().json,\n      prior_negative_count: priorNegativeCount\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2080,
+        -448
+      ],
+      "id": "08627978-0aef-4345-a761-6c72d316aa58",
+      "name": "Count Previous Negative Feedback",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "output": "={{\n  Number($json.confidence) < 0.7\n    ? 0\n    : Number($json.prior_negative_count) > 0 && Number($json.sentiment_score) < 0\n    ? 1\n    : $json.sentiment_label === 'Negative' && Number($json.severity_score) >= 0.7\n    ? 1\n    : $json.sentiment_label === 'Negative'\n    ? 2\n    : $json.sentiment_label === 'Positive' && Number($json.severity_score) < 0.7\n    ? 3\n    : 0\n}}"
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        2592,
+        64
+      ],
+      "id": "4d119b87-146b-46e5-9dbe-8850a44b1160",
+      "name": "Route Feedback"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "route": "Ready to post",
+            "route_reason": "Positive feedback with sufficient confidence and no high-severity issue.",
+            "prior_negative_count": "={{ $json.prior_negative_count }}",
+            "processing_status": "Complete"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2816,
+        432
+      ],
+      "id": "faef8970-bfa8-429d-8d25-4b4658fad3d1",
+      "name": "Mark Ready to Post"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "route": "Human review",
+            "route_reason": "AI confidence was too low or the feedback could not be safely routed automatically.",
+            "prior_negative_count": "={{ $json.prior_negative_count }}",
+            "review_status": "Needs review",
+            "processing_status": "Needs review"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2816,
+        -192
+      ],
+      "id": "a9339883-8813-4a0c-b456-7732b3c6b7ec",
+      "name": "Mark Human review"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "route": "Manager escalation",
+            "prior_negative_count": "={{ $json.prior_negative_count }}",
+            "route_reason": "Negative feedback requires escalation because it is high severity or the customer has complained before.",
+            "draft_status": "Pending",
+            "response_status": "Not sent",
+            "alert_delivery_status": "Pending",
+            "alert_status": "Open",
+            "review_status": "Needs review",
+            "processing_status": "Needs review"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2832,
+        0
+      ],
+      "id": "37984995-e2eb-4dab-9017-58a3fbf88cbc",
+      "name": "Mark Manager Escalation"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "route": "Private queue",
+            "prior_negative_count": "={{ $json.prior_negative_count }}",
+            "route_reason": "First-time negative feedback with lower severity; keep private and prepare a response draft for human review.",
+            "draft_status": "Pending",
+            "response_status": "Not sent",
+            "alert_delivery_status": "Not required",
+            "alert_status": "Not required",
+            "reviewer_notes": "Needs review",
+            "processing_status": "Needs review",
+            "feedback_id": "={{ $json.feedback_id }}"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2816,
+        240
+      ],
+      "id": "68437961-ab67-47ec-9b4c-18163d09ac26",
+      "name": "Mark Private Queue"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are drafting a customer-service response for a multi-location car care and auto repair company.\n\nYour task is to create a professional, empathetic, and appropriate response to a customer's feedback.\n\nUse the information provided in the customer feedback and any available context such as:\n\nCustomer name\n\nBranch/location\n\nService received\n\nFeedback text\n\nSentiment\n\nSeverity\n\nPrevious complaints\n\nIssue summary\n\nFollow these rules:\n\nAcknowledge the customer's feedback naturally.\n\nMatch the tone of the response to the seriousness of the complaint.\n\nShow empathy without sounding robotic or overly apologetic.\n\nDo not argue with, blame, or dismiss the customer.\n\nDo not admit legal liability or make promises the company may not be able to keep.\n\nDo not invent refunds, discounts, compensation, repairs, investigations, or actions that have not been approved.\n\nFor positive feedback, thank the customer and reinforce the positive experience.\n\nFor mild negative feedback, acknowledge the inconvenience and show that the feedback is valued.\n\nFor serious complaints, use a calm and professional tone and indicate that the matter deserves appropriate attention.\n\nIf escalation is needed, encourage further contact or indicate that the appropriate team will review the concern without making unsupported promises.\n\nKeep the response concise, clear, and human.\n\nAvoid generic phrases that make the response sound AI-generated.\n\nDo not repeat the customer's complaint word-for-word.\n\nDo not mention internal classifications such as:\n\nsentiment score\n\nseverity score\n\nconfidence score\n\nrouting decision\n\nAI classification\n\nProtect the customer's privacy and do not include unnecessary personal information.\n\nTone by Severity\n\nPositive feedback\n\nWarm\n\nAppreciative\n\nFriendly\n\nLow severity\n\nPolite\n\nEmpathetic\n\nReassuring\n\nMedium severity\n\nConcerned\n\nProfessional\n\nSolution-focused\n\nHigh severity\n\nCalm\n\nSerious\n\nEmpathetic\n\nEscalation-focused\n\nResponse Structure\n\nUse this structure where appropriate:\n\nGreeting\n\nThank the customer for the feedback\n\nAcknowledge the experience or concern\n\nExpress appropriate empathy\n\nState the next appropriate step without inventing actions\n\nClose professionally\n\nOutput Requirement\n\nReturn only the customer-facing response.\n\nDo not include:\n\nAnalysis\n\nSentiment explanation\n\nSeverity explanation\n\nInternal notes\n\nJSON\n\nRouting information\n\nSuggested actions for staff\n\nThe final response should sound like it was written by a professional customer-service representative for a reputable car care and auto repair company."
+            },
+            {
+              "content": "=Customer name:\n{{ $('Prepare Feedback Context').first().json.customer_name }}\n\nService:\n{{ $('Prepare Feedback Context').first().json.service }}\n\nCustomer feedback:\n{{ $('Prepare Feedback Context').first().json.feedback_text }}\n\nWrite the draft response."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "text"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        3040,
+        192
+      ],
+      "id": "4b787ad7-5144-445d-9015-f45d8b5317da",
+      "name": "Generate Response Draft"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get Matching Visit').first().json.manager_email }}",
+        "subject": "Urgent: Customer Feedback Escalation",
+        "emailType": "text",
+        "message": "=A customer feedback case requires immediate management attention.\n\nCustomer: {{ $('Prepare Feedback Context').first().json.customer_name }}  \nCustomer ID: {{ $('Prepare Feedback Context').first().json.customer_id }}  \nLocation: {{ $('Prepare Feedback Context').first().json.location }}\nService: {{ $('Prepare Feedback Context').first().json.service }}\nCustomer Feedback: {{ $('Prepare Feedback Context').first().json.feedback_text }}\nSentiment Score: {{ $('Extract AI Analysis').first().json.sentiment_score }}\nSeverity Score: {{ $('Extract AI Analysis').first().json.severity_score }}\nPrior Negative Feedback Count: {{ $('Count Previous Negative Feedback').first().json.prior_negative_count }}\nReason for Escalation: High-severity negative feedback or repeat negative feedback.\nPlease review and take appropriate action.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2384,
+        -448
+      ],
+      "id": "2f638651-bfe6-48c8-b0a5-2e42f3c28103",
+      "name": "Send Manager Alert",
+      "webhookId": "00000000-0000-4000-8000-000000002338"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $('Extract AI Analysis').first().json.feedback_id }}",
+            "response_draft": "={{ $('Generate Response Draft').first().json.output[0].content[0].text }}",
+            "draft_status": "Ready for review",
+            "response_status": "Not sent",
+            "review_status": "Needs review"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3360,
+        -608
+      ],
+      "id": "a30a9b6f-cb5c-46c3-9c20-990489d431d2",
+      "name": "Save Response Draft"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7e8292af-ea30-44ab-9c6c-565ab7b5510f",
+              "name": "feedback_id",
+              "value": "={{ $('Extract AI Analysis').first().json.feedback_id }}",
+              "type": "string"
+            },
+            {
+              "id": "93a61130-345b-4c79-a28f-c5bc8fd087d0",
+              "name": "alert_delivery_status",
+              "value": "Sent",
+              "type": "string"
+            },
+            {
+              "id": "36a119c2-ee56-40c6-827e-7e79c4693b79",
+              "name": "alert_status",
+              "value": "Open",
+              "type": "string"
+            },
+            {
+              "id": "ac9f0b2b-626b-4d38-9921-258c70235dc8",
+              "name": "alert_sent_at",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2832,
+        -496
+      ],
+      "id": "b7f73bae-3fed-48b0-b86d-7fc2db8f28de",
+      "name": "Prepare Alert Status"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "alert_delivery_status": "={{ $json.alert_delivery_status }}",
+            "alert_status": "={{ $json.alert_status }}",
+            "alert_sent_at": "={{ $json.alert_sent_at }}"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3616,
+        -48
+      ],
+      "id": "daa12743-9887-405a-8d18-e6a0e6c29eb8",
+      "name": "Mark Alert Sent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "20f40b68-7496-457c-8ec1-dc71e0211021",
+              "leftValue": "={{ $json.feedback_token }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        96
+      ],
+      "id": "c4a6d0b9-98ef-4766-adca-363830c360d6",
+      "name": "Feedback Token Present"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1344,
+        288
+      ],
+      "id": "a1e17890-db28-479c-9894-844f618733b1",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.feedback_text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a customer feedback analysis system for a multi-location car care and auto repair company.  Analyze only the customer feedback provided.  Return: - sentiment_label: Positive, Neutral, or Negative - sentiment_score: number from -1 to 1 - severity_score: number from 0 to 1 - confidence: number from 0 to 1 - summary: one short sentence  Severity should consider: - safety concerns - vehicle damage - financial loss - failed or incomplete repair - major inconvenience  Do not decide the routing. Do not write a customer response.  Return only valid JSON in this exact structure:  {   \"sentiment_label\": \"Negative\",   \"sentiment_score\": -0.5,   \"severity_score\": 0.4,   \"confidence\": 0.95,   \"summary\": \"Short summary of the feedback.\" }"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1344,
+        96
+      ],
+      "id": "6f8a9caf-87b7-4944-8267-1b44b82103f5",
+      "name": "Analyze Feedback Gemini",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "742b1177-7475-4bc5-a4be-53d7fbe9766e",
+              "name": "feedback_id",
+              "value": "={{ $('Save Original Feedback').first().json.feedback_id }}",
+              "type": "string"
+            },
+            {
+              "id": "6806ccd1-0335-43a8-813f-4e9d0a70c6cc",
+              "name": "customer_id",
+              "value": "={{ $('Prepare Feedback Context').first().json.customer_id }}",
+              "type": "string"
+            },
+            {
+              "id": "1afd672e-afd6-4c06-9058-2a02bb510615",
+              "name": "feedback_text",
+              "value": "={{ $('Prepare Feedback Context').first().json.feedback_text }}",
+              "type": "string"
+            },
+            {
+              "id": "3575094c-22d9-42bd-b2c4-767a840b2b02",
+              "name": "location",
+              "value": "={{ $('Prepare Feedback Context').first().json.location }}",
+              "type": "string"
+            },
+            {
+              "id": "3766f27c-ef36-435e-b8de-291afc24364a",
+              "name": "sentiment_label",
+              "value": "={{ JSON.parse($json.text.replace(/```json|```/g, '').trim()).sentiment_label }}",
+              "type": "string"
+            },
+            {
+              "id": "847eb848-6ffc-4744-8e26-756604f20315",
+              "name": "sentiment_score",
+              "value": "={{ JSON.parse($json.text.replace(/```json|```/g, '').trim()).sentiment_score }}",
+              "type": "number"
+            },
+            {
+              "id": "051b24b1-48a9-45ff-beca-cbcc664bf623",
+              "name": "severity_score",
+              "value": "={{ JSON.parse($json.text.replace(/```json|```/g, '').trim()).severity_score }}",
+              "type": "number"
+            },
+            {
+              "id": "39bf80b5-22ee-468a-9a20-864eb9eb4be9",
+              "name": "confidence",
+              "value": "={{ JSON.parse($json.text.replace(/```json|```/g, '').trim()).confidence }}",
+              "type": "number"
+            },
+            {
+              "id": "a8343ec4-8044-4a19-83a1-09b03291ff0e",
+              "name": "summary",
+              "value": "={{ JSON.parse($json.text.replace(/```json|```/g, '').trim()).summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1680,
+        80
+      ],
+      "id": "21c24c18-d0a6-414f-b92f-4c2581c0a412",
+      "name": "Extract AI Analysis1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "customer_id",
+              "lookupValue": "={{ $('Extract AI Analysis1').first().json.customer_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2144,
+        96
+      ],
+      "id": "45584d57-98dd-4c79-8397-3dc0cab126ad",
+      "name": "Get Customer Feedback History1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const currentFeedbackId =\n  $('Extract AI Analysis1').first().json.feedback_id;\n\nconst history = $input.all();\n\nconst priorNegativeCount = history.filter(item => {\n  const row = item.json;\n\n  return (\n    row.feedback_id !== currentFeedbackId &&\n    Number(row.sentiment_score) < 0\n  );\n}).length;\n\nreturn [\n  {\n    json: {\n      ...$('Extract AI Analysis1').first().json,\n      prior_negative_count: priorNegativeCount\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2384,
+        96
+      ],
+      "id": "73d3ae42-1cb0-47c5-a29e-69ca7cb1ef8e",
+      "name": "Count Previous Negative Feedback1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get Matching Visit').first().json.manager_email }}",
+        "subject": "Urgent: Customer Feedback Escalation",
+        "emailType": "text",
+        "message": "=A customer feedback case requires immediate management attention.\n\nCustomer: {{ $('Prepare Feedback Context').first().json.customer_name }}  \nCustomer ID: {{ $('Prepare Feedback Context').first().json.customer_id }}  \nLocation: {{ $('Prepare Feedback Context').first().json.location }}\nService: {{ $('Prepare Feedback Context').first().json.service }}\nCustomer Feedback: {{ $('Prepare Feedback Context').first().json.feedback_text }}\nSentiment Score: {{ $('Extract AI Analysis1').first().json.sentiment_score }}\nSeverity Score: {{ $('Extract AI Analysis1').first().json.severity_score }}\nPrior Negative Feedback Count: {{ $('Count Previous Negative Feedback1').first().json.prior_negative_count }}\nReason for Escalation: High-severity negative feedback or repeat negative feedback.\nPlease review and take appropriate action.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3104,
+        -304
+      ],
+      "id": "f6a7bff4-3f7a-4f3c-81ce-5e69ab65504d",
+      "name": "Send Manager Alert1",
+      "webhookId": "00000000-0000-4000-8000-000000002338"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7e8292af-ea30-44ab-9c6c-565ab7b5510f",
+              "name": "feedback_id",
+              "value": "={{ $('Extract AI Analysis1').first().json.feedback_id }}",
+              "type": "string"
+            },
+            {
+              "id": "93a61130-345b-4c79-a28f-c5bc8fd087d0",
+              "name": "alert_delivery_status",
+              "value": "Sent",
+              "type": "string"
+            },
+            {
+              "id": "36a119c2-ee56-40c6-827e-7e79c4693b79",
+              "name": "alert_status",
+              "value": "Open",
+              "type": "string"
+            },
+            {
+              "id": "ac9f0b2b-626b-4d38-9921-258c70235dc8",
+              "name": "alert_sent_at",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3360,
+        -272
+      ],
+      "id": "10485465-2c2e-4bd9-be0f-ad051a8a37aa",
+      "name": "Prepare Alert Status1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $('Extract AI Analysis1').first().json.feedback_id }}",
+            "response_draft": "={{ $('Generate Response Draft').first().json.output[0].content[0].text }}",
+            "draft_status": "Ready for review",
+            "response_status": "Not sent",
+            "review_status": "Needs review"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3360,
+        176
+      ],
+      "id": "21faaf03-ff4b-49ec-a8ea-9744c0987a3d",
+      "name": "Save Response Draft1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d0a8d81-c50f-4e96-a704-61c822711595",
+              "name": "feedback_id",
+              "value": "={{ $('Save Original Feedback').first().json.feedback_id }}",
+              "type": "string"
+            },
+            {
+              "id": "ac340d49-185c-41a7-8d31-d365c6377de6",
+              "name": "processing_status",
+              "value": "Failled",
+              "type": "string"
+            },
+            {
+              "id": "0d723c67-5154-448a-ab59-4462d34b071b",
+              "name": "review_status",
+              "value": "Needs review",
+              "type": "string"
+            },
+            {
+              "id": "75616498-364f-4d52-8e93-e4c1068d0fd5",
+              "name": "error_message",
+              "value": "={{ $json.error?.message || $json.error?.description || $json.message || 'AI analysis failed' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1536,
+        -144
+      ],
+      "id": "985d70ac-16a2-45b6-8a62-bab10d1ac755",
+      "name": "Prepare Processing Error"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 508497197,
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feedback_id": "={{ $json.feedback_id }}",
+            "processing_status": "={{ $json.processing_status }}",
+            "review_status": "={{ $json.review_status }}",
+            "error_message": "={{ $json.error_message }}"
+          },
+          "matchingColumns": [
+            "feedback_id"
+          ],
+          "schema": [
+            {
+              "id": "feedback_id",
+              "displayName": "feedback_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "visit_id",
+              "displayName": "visit_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "feedback_text",
+              "displayName": "feedback_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "severity_score",
+              "displayName": "severity_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "prior_negative_count",
+              "displayName": "prior_negative_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "route",
+              "displayName": "route",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "route_reason",
+              "displayName": "route_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_draft",
+              "displayName": "response_draft",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "draft_status",
+              "displayName": "draft_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_status",
+              "displayName": "response_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "response_sent_at",
+              "displayName": "response_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "alert_delivery_status",
+              "displayName": "alert_delivery_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "alert_status",
+              "displayName": "alert_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "alert_sent_at",
+              "displayName": "alert_sent_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "review_status",
+              "displayName": "review_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviewer_notes",
+              "displayName": "reviewer_notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "processing_status",
+              "displayName": "processing_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_label",
+              "displayName": "sentiment_label",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1760,
+        -144
+      ],
+      "id": "3bb222fd-76a4-4234-b4cc-616170338048",
+      "name": "Mark Processing Error"
+    }
+  ],
+  "connections": {
+    "Customer Feedback Form": {
+      "main": [
+        [
+          {
+            "node": "Feedback Token Present",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Original Feedback": {
+      "main": [
+        [
+          {
+            "node": "Prepare Feedback Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Matching Visit": {
+      "main": [
+        [
+          {
+            "node": "Save Original Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Feedback Context": {
+      "main": [
+        [
+          {
+            "node": "Update Feedback Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Feedback Context": {
+      "main": [
+        [
+          {
+            "node": "Analyze Feedback Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Feedback": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Prepare Processing Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract AI Analysis": {
+      "main": [
+        []
+      ]
+    },
+    "Save AI Scores": {
+      "main": [
+        [
+          {
+            "node": "Get Customer Feedback History1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Customer Feedback History": {
+      "main": [
+        []
+      ]
+    },
+    "Count Previous Negative Feedback": {
+      "main": [
+        []
+      ]
+    },
+    "Route Feedback": {
+      "main": [
+        [
+          {
+            "node": "Mark Human review",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Manager Escalation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Private Queue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Ready to Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Private Queue": {
+      "main": [
+        [
+          {
+            "node": "Generate Response Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Manager Escalation": {
+      "main": [
+        [
+          {
+            "node": "Generate Response Draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Manager Alert1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Response Draft": {
+      "main": [
+        [
+          {
+            "node": "Save Response Draft1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Manager Alert": {
+      "main": [
+        []
+      ]
+    },
+    "Prepare Alert Status": {
+      "main": [
+        []
+      ]
+    },
+    "Mark Alert Sent": {
+      "main": [
+        []
+      ]
+    },
+    "Feedback Token Present": {
+      "main": [
+        [
+          {
+            "node": "Get Matching Visit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Matching Visit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analyze Feedback Gemini",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Feedback Gemini": {
+      "main": [
+        [
+          {
+            "node": "Extract AI Analysis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract AI Analysis1": {
+      "main": [
+        [
+          {
+            "node": "Save AI Scores",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Customer Feedback History1": {
+      "main": [
+        [
+          {
+            "node": "Count Previous Negative Feedback1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Count Previous Negative Feedback1": {
+      "main": [
+        [
+          {
+            "node": "Route Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Manager Alert1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Alert Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Alert Status1": {
+      "main": [
+        [
+          {
+            "node": "Mark Alert Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Processing Error": {
+      "main": [
+        [
+          {
+            "node": "Mark Processing Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  }
+}
