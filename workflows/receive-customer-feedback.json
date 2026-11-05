@@ -38,7 +38,8 @@
       ],
       "id": "53367036-358a-4968-90a3-5372b9ca384e",
       "name": "Customer Feedback Form",
-      "webhookId": "00000000-0000-4000-8000-000000002385"
+      "webhookId": "00000000-0000-4000-8000-000000002385",
+      "disabled": true
     },
     {
       "parameters": {
