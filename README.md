@@ -1,59 +1,66 @@
 # Reputation & Feedback Intelligence Engine
 
-**TS Academy AI & Automation capstone | Archived workflow portfolio project (2026)**
+**TS Academy AI & Automation Capstone · Portfolio archive (2026)**
 
-An n8n project designed to request customer feedback after a visit, link responses to visit records, analyze feedback with AI, and route follow-up actions.
+Two interconnected n8n workflows designed around a fictional multi-location service business. Together, they demonstrate requesting customer feedback, linking it to visit records, processing responses, and routing cases for review or follow-up with **Gemini-assisted analysis**.
 
-## Workflow 1 — Send Feedback Request (11 nodes)
+**Status:** Historical, sanitized workflow exports. Not a live deployment, not re-tested after archival and sanitization.
 
-- Track staff/customer visits and feedback-request eligibility in Google Sheets.
-- Prepare a feedback link and request through Gmail.
-- Update request statuses in the visit records.
-
-## Workflow 2 — Receive Customer Feedback (31 nodes)
-
-- Receive feedback submitted through a form and match it to an existing visit.
-- Update records in Google Sheets and prepare feedback context.
-- Analyze sentiment and feedback via **Gemini** on the archived connected analysis route.
-- Route feedback to a private queue, human review, manager escalation, or ready-to-post path.
-- Draft or record follow-up responses and manager notifications.
+## Architecture
 
 ```mermaid
 flowchart TD
- A[Visit recorded in Google Sheets] --> B[Send feedback request]
- B --> C[Customer submits feedback form]
- C --> D[Match visit and save feedback]
- D --> E[AI analysis via Gemini]
- E --> F{Feedback routing}
- F --> G[Ready to post / private queue]
- F --> H[Human review]
- F --> I[Manager escalation]
+ A[Staff Visit Form] --> B[Find customer / create visit record]
+ B --> C[Prepare feedback request]
+ C --> D[Gmail: send feedback link]
+ D --> E[Customer Feedback Form]
+ E --> F[Check token + match visit]
+ F --> G[Save original feedback + context]
+ G --> H[Gemini: sentiment and severity analysis]
+ H --> I[Store analysis + check feedback history]
+ I --> J{Routing rules}
+ J -->|Positive / low severity| K[Ready to post]
+ J -->|Negative / lower severity| L[Private queue]
+ J -->|Serious negative / repeat issue| M[Manager escalation]
+ J -->|Low confidence / other| N[Human review]
+ M --> O[Manager alert and draft reply]
+ L --> P[Draft reply]
 ```
 
-## Technologies
+The diagram simplifies the flow for readability; refer to the JSON exports for the complete node wiring. Form-trigger paths are **disabled in the sanitized portfolio version**.
 
-n8n, Google Sheets, Gmail, Gemini, OpenAI nodes, n8n forms, JavaScript/code nodes, conditional branching.
+## Included workflows
 
-## Workflow files
+| File | Nodes | Description |
+| --- | ---: | --- |
+| [Send feedback request](workflows/send-feedback-request.json) | 11 | Visit intake, feedback eligibility, request sending, visit status updates |
+| [Receive customer feedback](workflows/receive-customer-feedback.json) | 31 | Form intake, matching, Google Sheets logging, Gemini analysis, score extraction, routing, drafts and escalation |
 
-- [Send feedback request](workflows/send-feedback-request.json)
-- [Receive customer feedback](workflows/receive-customer-feedback.json)
+**Important architecture detail:** The historical export connects a **Gemini** chat model to the analysis path. Other OpenAI nodes are present as legacy or alternate nodes; a separately archived OpenAI recovery version was **not live-tested**. We do not claim it ran successfully.
 
-## Restore and test
+## Illustrative demonstration
 
-1. Import both JSON workflow files into an active n8n instance.
-2. Reconnect Google Sheets, Gmail and Gemini credentials; configure any OpenAI nodes you choose to use.
-3. Replace the placeholder spreadsheet IDs and form URL, and verify sheet names, columns and mappings.
-4. Use only fake visit/customer data for initial tests.
-5. Test every route, notification and failure path before using the workflows with real people.
+![Synthetic feedback routing mock-up](assets/demo-preview.svg)
 
-## Archive status and limitations
+*This is an illustrative screenshot-style mock-up with synthetic data — not a real n8n execution screenshot.*
 
-- This is a **sanitized historical export**, not a running or production-verified installation.
-- The original archived Receive Customer Feedback workflow has **Gemini on the connected analysis path**. OpenAI nodes appear in the export, but a separate OpenAI recovery version was **not live-tested** and is not asserted here as deployed.
-- Credentials, customer sample data, saved spreadsheet IDs and original service URLs have been stripped or replaced with placeholders.
-- Importing alone does not make the workflows operational. Reconfiguration and end-to-end testing are required.
+- [Synthetic feedback example CSV](examples/demo-feedback.csv)
+- [Security and setup notes](SECURITY.md)
 
-### Attribution
+## Technologies and skills
 
-Built as a learner capstone project while developing practical AI and workflow automation skills.
+n8n, Google Sheets, Gmail, Gemini, AI sentiment analysis, workflow automation, conditional routing, form intake, data mapping, manager escalation, and process design.
+
+## Import and test
+
+1. Import both workflow JSON files into an active n8n workspace.
+2. **Keep all triggers disabled** until you have reviewed credentials, recipients and sheet mappings.
+3. Connect your own Google Sheets, Gmail and Gemini credentials. Configure any OpenAI nodes separately if you choose to experiment with them.
+4. Replace `REPLACE_WITH_GOOGLE_SHEET_ID` and the sample form URL with new test resources.
+5. Verify sheet names, tab IDs, field mappings, feedback token behavior and error paths.
+6. Test each scenario using synthetic data before any live customer use.
+7. Confirm privacy, consent and escalation procedures appropriate for the business.
+
+## Credible portfolio statement
+
+The value of this project is in designing the workflow, mapping business processes to automation steps, configuring routing and connecting cloud tools. It is **not** evidence of a currently running production system or independently verified business performance.
