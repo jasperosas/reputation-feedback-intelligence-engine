@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-06",
+  "environment": "Local n8n Community Edition on Windows; separate inactive test workflows; owner-only private copy of existing project records",
+  "checks": [
+    {"name":"Request workflow, no-email path","execution":"Success","duration_seconds":12.097,"private_visit_rows_appended":1,"verified_request_status":"Not sent","sent_timestamp_blank":true},
+    {"name":"Receiving workflow, restored Gemini failure path","execution":"Success","duration_seconds":22.451,"feedback_processing_status":"Failed","review_status":"Needs review","scores_blank":true,"fresh_analysis":false,"error_handler_sequences":1},
+    {"name":"Receiving workflow, positive stored-score replay","execution":"Success","duration_seconds":30.287,"persisted_route":"Ready to post","persisted_processing_status":"Complete","summary_saved":true,"fresh_analysis":false},
+    {"name":"Receiving workflow, neutral stored-score replay","execution":"Success","duration_seconds":35.663,"persisted_route":"Human review","persisted_processing_status":"Needs review","summary_saved":true,"fresh_analysis":false},
+    {"name":"Receiving workflow, missing-token rejection","execution":"Success","duration_seconds":8.024,"executed_nodes":["Manual Test Trigger","Private Test Submission","Feedback Token Present","Reject Missing Token"],"visit_lookups":0,"feedback_writes":0}
+  ],
+  "replay_summary": "Explicit test summary fixture; no fresh AI summary generated",
+  "gmail": "Every Gmail node disabled throughout; no messages sent; downstream send-status writers bypassed or disabled",
+  "final_state": "Inactive/unpublished; normal unpinned receiving configuration restored",
+  "not_verified": ["Fresh Gemini analysis","OpenAI response drafting","Gmail delivery","Manager/private-queue branches with live drafting","Automatic form or sheet triggers","Production readiness"]
+}

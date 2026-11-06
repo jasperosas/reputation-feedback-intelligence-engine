@@ -1,0 +1,123 @@
+{
+  "date": "2026-11-06",
+  "scope": "Local Node.js checks of repaired node code, saved expressions and graph configuration; not n8n runtime, live Sheets or AI-provider execution",
+  "passed": 29,
+  "results": [
+    {
+      "test": "Unique visit accepts one exact token match",
+      "result": "PASS"
+    },
+    {
+      "test": "One-submission guard rejects batch input before matching or writes",
+      "result": "PASS"
+    },
+    {
+      "test": "Unknown token rejects empty lookup item",
+      "result": "PASS"
+    },
+    {
+      "test": "Duplicate visit match rejects ambiguity",
+      "result": "PASS"
+    },
+    {
+      "test": "Missing token cannot pass unique-match check",
+      "result": "PASS"
+    },
+    {
+      "test": "Valid AI JSON preserves context and numeric scores",
+      "result": "PASS"
+    },
+    {
+      "test": "Markdown fenced AI JSON parses",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects empty",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects malformed",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects array",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects invalid label",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects string score",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects out-of-range score",
+      "result": "PASS"
+    },
+    {
+      "test": "AI validation rejects missing summary",
+      "result": "PASS"
+    },
+    {
+      "test": "History excludes current, later, duplicate, other-customer and undated records",
+      "result": "PASS"
+    },
+    {
+      "test": "Invalid current date fails instead of counting uncertain history",
+      "result": "PASS"
+    },
+    {
+      "test": "Route: low confidence first",
+      "result": "PASS"
+    },
+    {
+      "test": "Route: repeat negative",
+      "result": "PASS"
+    },
+    {
+      "test": "Route: severity boundary",
+      "result": "PASS"
+    },
+    {
+      "test": "Route: private negative",
+      "result": "PASS"
+    },
+    {
+      "test": "Route: positive ready",
+      "result": "PASS"
+    },
+    {
+      "test": "Route: neutral fallback",
+      "result": "PASS"
+    },
+    {
+      "test": "Both test workflows inactive and every Gmail disabled",
+      "result": "PASS"
+    },
+    {
+      "test": "Every explicitly mapped Sheets writer supplies matching column schemas",
+      "result": "PASS"
+    },
+    {
+      "test": "Request no-email path bypasses all sending and Sent writers",
+      "result": "PASS"
+    },
+    {
+      "test": "Connected Gemini and validation error outputs reach error handler",
+      "result": "PASS"
+    },
+    {
+      "test": "Analysis failures cannot emit an empty normal-branch item",
+      "result": "PASS"
+    },
+    {
+      "test": "Validated summary is mapped to the private-sheet summary column",
+      "result": "PASS"
+    },
+    {
+      "test": "Correct failure spelling, context names and private review-status mapping",
+      "result": "PASS"
+    }
+  ]
+}

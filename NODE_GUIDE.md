@@ -133,8 +133,16 @@ Gemini is connected for feedback analysis. OpenAI is separately connected for `G
 | Many expressions use `.first()`. | The archive is shaped around one submission at a time. Test record pairing before using it as a batch processor. |
 | Route and follow-up statuses are written by different nodes. | A saved route does not prove a response draft was saved, an alert was delivered or a manager resolved the case. |
 
-These are documentation findings, not fixes applied to the workflow exports. Keep existing records and customer details in private working resources; no record contents, addresses, spreadsheet IDs or tokens are needed in this guide.
+These findings describe the unchanged archival workflow exports. Repairs were applied in separate no-email test copies, not in those archive files. Keep existing records and customer details in private working resources; no record contents, addresses, spreadsheet IDs or tokens are needed in this guide.
 
 ## Verification boundary
 
 The node counts, field mappings, saved disabled flags and named connections were checked directly against the two JSON exports. Runtime credentials, current model availability, provider response shapes, email delivery and error-path behavior require separate execution evidence. See [README.md](README.md) for project status and [SECURITY.md](SECURITY.md) for handling the archived exports.
+
+## Separate restoration test copies — 6 November 2026
+
+The original 42-node guide above remains an archive reference. New [request](workflows/test-send-feedback-request.json) and [receiving](workflows/test-receive-customer-feedback.json) test copies contain 15 and 36 nodes respectively, including manual private-input adapters and safety guards. Both are inactive, and every Gmail node is disabled. Their public private-input adapters stop until configured locally.
+
+Verified runtime results are limited to the no-email request path, positive/neutral stored-score replays, missing-token rejection and the configured Gemini-failure handler. The latter records `Failed` and `Needs review` when the tested model has no credential. Replay is not fresh analysis. OpenAI drafting and Gmail delivery remain unverified.
+
+See [TESTING.md](TESTING.md) for each repair, its verification scope, redacted screenshots, 29 local code/graph checks and the unverified boundaries. The private workbook's new `summary` column is free text; the public JSON retains placeholder spreadsheet IDs and no credentials or record contents.

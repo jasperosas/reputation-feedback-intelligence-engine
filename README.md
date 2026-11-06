@@ -4,7 +4,7 @@
 
 Two interconnected n8n workflows for a multi-location service business. Together, they demonstrate requesting customer feedback, linking it to visit records, processing responses, and routing cases for review or follow-up with **Gemini-assisted analysis**.
 
-**Status:** Historical, sanitized workflow exports. Not a live deployment, not re-tested after archival and sanitization.
+**Status — 6 November 2026:** Original exports are preserved as a historical archive. Separate repaired, inactive **no-email test workflows** have now been executed locally against an **owner-only private copy of existing project records**. Verified results include a request/visit write, positive and neutral **stored-score replays**, missing-token rejection, and AI-failure status logging. **Fresh Gemini analysis, OpenAI drafting and Gmail delivery remain unverified.** See [TESTING.md](TESTING.md).
 
 ## Architecture
 
@@ -38,6 +38,21 @@ The diagram simplifies the flow for readability; refer to the JSON exports for t
 
 **Important architecture detail:** The historical export connects **Gemini for feedback analysis and OpenAI for response drafting**. A separate OpenAI analysis node is retained outside the connected intake path. The separately archived OpenAI-analysis recovery version was **not live-tested**.
 
+## Repaired no-email test copies
+
+| File | Nodes | Default safety state |
+| --- | ---: | --- |
+| [Request test](workflows/test-send-feedback-request.json) | 15 | Inactive; Gmail, automatic triggers and send-status writers disabled |
+| [Receiving test](workflows/test-receive-customer-feedback.json) | 36 | Inactive; Gmail and automatic triggers disabled; explicit token/analysis error handling |
+
+These copies require a private test-sheet ID, a local Sheets credential, and exactly one privately configured existing-record submission before execution. The public adapters contain **no record contents** and stop until configured. The original archive files above remain unchanged, including their historical configuration.
+
+![Redacted actual request-test execution](assets/restoration-request-success.png)
+
+*Actual no-email n8n execution, not the illustrative mock-up below. The new visit was read back as `Not sent`, with a blank sent timestamp. Disabled senders and bypassed status writers do not establish delivery.*
+
+The receiving workflow's valid-data checks used **pinned stored scores**, not fresh AI output. Its unpinned Gemini path had no configured credential; the repaired error path recorded `Failed` and `Needs review` without inventing scores. All Gmail nodes stayed disabled. [Runtime evidence and limits](TESTING.md) · [29 reproducible local checks](test-results/local-checks.json)
+
 ## Node-by-node guide
 
 Read [NODE_GUIDE.md](NODE_GUIDE.md) for explanations of all **42 saved nodes**, their inputs, outputs and next steps, the six routing rules, and the connected, disabled and retained alternatives. The guide also identifies restoration issues visible in the existing exports.
@@ -57,14 +72,21 @@ n8n, Google Sheets, Gmail, Gemini, AI sentiment analysis, workflow automation, c
 
 ## Import and test
 
-1. Import the JSON files into **separate inactive workflows** in an n8n workspace you control.
-2. **Keep all triggers and Gmail send nodes disabled** while reviewing credentials, recipients and sheet mappings. The archived exports disable their triggers, but do not disable the Gmail nodes themselves. Check downstream send-status writers so a disabled Gmail node cannot be mistaken for delivery.
-3. Configure Google Sheets and Gemini credentials for the connected analysis path. The connected response-drafting node also needs an OpenAI credential. Configure Gmail only for a separately authorized delivery test.
-4. Replace `REPLACE_WITH_GOOGLE_SHEET_ID` and the sample form URL in a **private working copy** using the project's existing workbook structure. Keep configured IDs and record contents out of GitHub.
-5. Verify sheet names, tab IDs, field mappings, feedback token behavior and error paths.
-6. Existing stored scores can be replayed privately to check routing. Record replay is not a fresh AI-analysis or end-to-end n8n execution; document each actual restored-workflow run separately.
-7. Confirm privacy, consent and escalation procedures appropriate for the business.
+1. Use the **repaired test copies** above in separate inactive workflows. The original archival exports disable their triggers but retain enabled Gmail nodes; they are preserved for traceability.
+2. Make an **owner-only private workbook copy** of the existing project records. Keep the `Visits` and `Feedback` tabs and their headers. Add a free-text `summary` column to `Feedback`; remove any inherited sentiment dropdown from that new column.
+3. Configure the private test-sheet ID and existing local Sheets credential. In `Private Test Submission`, configure **one** existing record privately. Preserve the original source workbook.
+4. Keep every Gmail node disabled. Keep the request send-status writers and alert send-status writers disabled/bypassed. Run the request workflow manually and read back `Not sent` and a blank sent timestamp.
+5. Test receiving with a missing token, a uniquely matching visit, invalid AI-output fixtures and dated history. Stored-score replay must be identified as replay. Fresh analysis requires separately configured Gemini credentials; live drafting requires OpenAI credentials.
+6. Keep configured IDs, tokens, contact details, record text, credentials and unredacted exports out of GitHub. Leave both workflows inactive after testing.
+
+For offline code/graph checks, run:
+
+```sh
+node scripts/verify-restoration.cjs
+```
+
+This runs 29 local checks and writes `test-results/local-checks.json`. It does not call n8n, Google Sheets, an AI provider or Gmail. See [TESTING.md](TESTING.md) for actual runtime results.
 
 ## Credible portfolio statement
 
-The value of this project is in designing the workflow, mapping business processes to automation steps, configuring routing and connecting cloud tools. It is **not** evidence of a currently running production system or independently verified business performance.
+Designed the original 42-node capstone and restored separate inactive test copies with explicit token validation, AI-output checks, dated feedback history and no-email safeguards. Verified local n8n writes, stored-score routing and failure-status logging are documented with redacted evidence. Fresh AI-provider behavior and email delivery remain unverified. This is **not** a production deployment or evidence of independently verified business performance.
