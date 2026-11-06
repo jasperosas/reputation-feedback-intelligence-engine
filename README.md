@@ -6,6 +6,14 @@ Two interconnected n8n workflows for a multi-location service business. Together
 
 **Status — 6 November 2026:** Original exports are preserved as a historical archive. Separate repaired, inactive **no-email test workflows** have now been executed locally against an **owner-only private copy of existing project records**. Verified results include a request/visit write, positive and neutral **stored-score replays**, missing-token rejection, and AI-failure status logging. **Fresh Gemini analysis, OpenAI drafting and Gmail delivery remain unverified.** See [TESTING.md](TESTING.md).
 
+## Blank Google Sheets template
+
+Download [the blank workbook](templates/reputation-blank-template.xlsx), upload it to Google Drive, open it with Google Sheets, then choose **File → Save as Google Sheets** if it opens in Office editing mode. It contains header-only `Visits` (12 fields) and `Feedback` (27 fields) tabs, including the free-text `summary` column. Header-only CSVs are available for [Visits](templates/visits-headers.csv) and [Feedback](templates/feedback-headers.csv).
+
+This is a fresh schema-only template with no customer records, tokens, credentials, hidden data or dashboard formulas. Unused `Column 1`–`Column 14` placeholders from the archived workbook are omitted. The workflows use the named fields. No validation is applied to `summary`.
+
+Keep tab names and headers unchanged. An empty workbook has no visits to match; receiving requires exactly one matching token-bearing visit. The documented existing-record tests used a separate owner-only private copy, not this blank template. Configure sheet IDs and records privately, keep both test workflows inactive and all Gmail nodes disabled. Creating this template does not extend the verified runtime results in [TESTING.md](TESTING.md).
+
 ## Architecture
 
 ```mermaid
